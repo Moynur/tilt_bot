@@ -28,3 +28,5 @@ Flame player
 Connect to Discord server
 - Be able to connect to a discord server
 - Send a your flame in a channel 
+=======
+Functionality coming 
