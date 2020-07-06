@@ -13,6 +13,7 @@ Poll the api
 20 requests every 1 seconds(s) limit
 100 requests every 2 minutes(s) limit
 - Build out a polling function with configurable tick - Can poll API need to figure out how to extract information, as we can overwrite a single struct a db may not be necessary initially 
+- Channel built to send information after performing request, need to look into turning my main.go into a function now and encapsulate everything it does
 
 -- Psql/Mongo package
 Store info from API
