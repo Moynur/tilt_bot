@@ -3,10 +3,10 @@ package riot_test
 import (
 	"reflect"
 	"testing"
-	"tiltbot/riotstruct"
+	"tiltbot/riot"
 )
 
-var expectedStruct = riotstruct.SummonerName{
+var expectedStruct = riot.SummonerName{
 	// ID is encrypted SUMMONER ID
 	ID: "Lmm2gqd1xTqHZapAhz6upBqCqeIL6yyXuZ1sqlf2Lzlx7Hg",
 	// AccountID is encrypted Account ID
@@ -19,10 +19,11 @@ var expectedStruct = riotstruct.SummonerName{
 }
 
 // This is the JSON format of the expected struct and vice versa
-var inputJSON string = `{"id":"Lmm2gqd1xTqHZapAhz6upBqCqeIL6yyXuZ1sqlf2Lzlx7Hg","accountId":"ZAuc8LTu1rf3SnG08hewotljqtneFj1XgMFzhuJZczkVArM","puuid":"fXrHkmwdTpr-GJ1Pd7CIITlU4c-Gqmn79tUkux2F7EynBaK18jov31L4RpdUA_EgrJPj151Z8e7YFQ","name":"HepticHorror","profileIconId":4496,"revisionDate":1591971410,"summonerLevel":218}`
+var inputJSON []byte = byte(`{"id":"Lmm2gqd1xTqHZapAhz6upBqCqeIL6yyXuZ1sqlf2Lzlx7Hg","accountId":"ZAuc8LTu1rf3SnG08hewotljqtneFj1XgMFzhuJZczkVArM","puuid":"fXrHkmwdTpr-GJ1Pd7CIITlU4c-Gqmn79tUkux2F7EynBaK18jov31L4RpdUA_EgrJPj151Z8e7YFQ","name":"HepticHorror","profileIconId":4496,"revisionDate":1591971410,"summonerLevel":218}`
 
+// Need to refacor tests woo 
 func TestConstructGood(t *testing.T) {
-	actual, _ := riotstruct.MaKeSummonerName(inputJSON)
+	actual, _ := riot.MaKeSummonerName(inputJSON)
 	if !reflect.DeepEqual(actual, expectedStruct) {
 		t.Fatalf("FAIL: \nExpected: %#v\nActual: %#v", expectedStruct, actual)
 	}

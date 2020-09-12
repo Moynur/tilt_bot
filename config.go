@@ -6,17 +6,23 @@ import (
 )
 
 var (
-	riotKey string
+	riotKey          string
+	discordToken     string
+	discordChannelID string
 )
 
 type config struct {
-	riotKey string
+	riotKey          string
+	discordToken     string
+	discordChannelID string
 }
 
 // Check your vars exist
 func check() (*config, error) {
 	for k, v := range map[string]*string{
-		"riot_key": &riotKey,
+		"riot_key":             &riotKey,
+		"discord_server_token": &discordToken,
+		"TargetChannelID2":     &discordChannelID,
 	} {
 		var ok bool
 		if *v, ok = os.LookupEnv(k); !ok {
@@ -24,6 +30,8 @@ func check() (*config, error) {
 		}
 	}
 	return &config{
-		riotKey: riotKey,
+		riotKey:          riotKey,
+		discordToken:     discordToken,
+		discordChannelID: discordChannelID,
 	}, nil
 }

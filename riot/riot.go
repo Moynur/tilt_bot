@@ -24,7 +24,7 @@ func New(name, key string) (*GetMatchHistory, *SummonerName, error) {
 	if len(key) == 0 || len(key) == 0 {
 		return nil, nil, fmt.Errorf("One of your variables is empty, \nname:%v \nkey:%v ", name, key)
 	}
-	respBody, err := getInfo(nameURL, name, key)
+	respBody, err := GetInfo(nameURL, name, key)
 	if err != nil {
 		return nil, nil, fmt.Errorf("Somethings gone wrong: %v", err)
 	}
@@ -37,7 +37,7 @@ func New(name, key string) (*GetMatchHistory, *SummonerName, error) {
 }
 
 // GetInfo will be used to construct all http requests
-func getInfo(BaseURL, QueryParam, authKey string) ([]byte, error) {
+func GetInfo(BaseURL, QueryParam, authKey string) ([]byte, error) {
 	if authKey == "" {
 		return nil, errors.New("No Auth Header")
 	}
@@ -70,7 +70,7 @@ func getInfo(BaseURL, QueryParam, authKey string) ([]byte, error) {
 
 // GetSummonerMatchHistory uses that information to perform a single check on summoner
 func (s *GetMatchHistory) GetSummonerMatchHistory() (FlexQ, SoloQ AccountGamesPlayed, err error) {
-	resp, err := getInfo(matchURL, s.encryptedID, s.key)
+	resp, err := GetInfo(matchURL, s.encryptedID, s.key)
 	if err != nil {
 		return FlexQ, SoloQ, fmt.Errorf("Somethings gone wrong: %v", err)
 	}
@@ -79,15 +79,21 @@ func (s *GetMatchHistory) GetSummonerMatchHistory() (FlexQ, SoloQ AccountGamesPl
 }
 
 // Poll essentially the same as Request but this will poll rather than perform a single request
-func (s *GetMatchHistory) Poll(tickrate int) {
+func (s *GetMatchHistory) Poll(c chan AccountGamesPlayed, tickrate int) {
 	ticker := time.NewTicker(time.Second * time.Duration(tickrate)).C
 	for {
 		select {
 		case <-ticker:
-			go getInfo(matchURL, s.encryptedID, s.key)
+			GetInfo(matchURL, s.encryptedID, s.key)
 			fmt.Println("I just did a request")
+			resp, err := GetInfo(matchURL, s.encryptedID, s.key)
+			if err != nil {
+				panic("implement error handler plz")
+			}
+			_, SoloQ, err := MakeGamesPlayed(resp)
+			fmt.Println("increased losses by 1 ", SoloQ.Losses)
+			c <- SoloQ
 		}
 
 	}
-
 }

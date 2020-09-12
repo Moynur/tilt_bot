@@ -1,7 +1,5 @@
 package riot_test
 
-package bin
-
 import (
 	"net/http"
 )
