@@ -8,8 +8,6 @@ perform HTTP request to riot API
 - Be able to check if summoner is in game - not necessary for now 
 - Be able to check summoners w/l  - done 
 
-test
-
 -- Riot package - maybe make a seperate polling package for reuseability 
 Poll the api
 20 requests every 1 seconds(s) limit
