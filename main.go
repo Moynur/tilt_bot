@@ -31,13 +31,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Request failed, %v", err)
 	}
-	fmt.Println("This should be Soloq: ", SoloQ.QueueType, SoloQ.LeaguePoints)
-	fmt.Println("This should be FlexQ: ", FlexQ.QueueType, SoloQ.LeaguePoints)
 	testStruct := make(chan riot.AccountGamesPlayed)
 	go riotService.Poll(testStruct, tickrate)
 
 	for {
-		fmt.Println("start loop")
 		select {
 		case UpdatedSoloq := <-testStruct:
 			if SoloQ.Losses > UpdatedSoloq.Losses {

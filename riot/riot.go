@@ -85,13 +85,11 @@ func (s *GetMatchHistory) Poll(c chan AccountGamesPlayed, tickrate int) {
 		select {
 		case <-ticker:
 			GetInfo(matchURL, s.encryptedID, s.key)
-			fmt.Println("I just did a request")
 			resp, err := GetInfo(matchURL, s.encryptedID, s.key)
 			if err != nil {
 				panic("implement error handler plz")
 			}
 			_, SoloQ, err := MakeGamesPlayed(resp)
-			fmt.Println("increased losses by 1 ", SoloQ.Losses)
 			c <- SoloQ
 		}
 
