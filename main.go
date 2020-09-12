@@ -27,7 +27,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Something is probably empty, %v", err)
 	}
-	FlexQ, SoloQ, err := riotService.GetSummonerMatchHistory()
+	_, SoloQ, err := riotService.GetSummonerMatchHistory()
 	if err != nil {
 		log.Fatalf("Request failed, %v", err)
 	}
